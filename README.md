@@ -28,12 +28,6 @@ To start the development server, run:
         Install dependencies:
         npm install
 
-### Dependencies
-
-        React.js
-        Chakra UI
-        Axios
-
 ### Configuration
 
 Before running the frontend application, ensure that the backend server is running and accessible. Update the REACT_APP_BACKEND_URL variable in the .env file with the URL of your backend server.
