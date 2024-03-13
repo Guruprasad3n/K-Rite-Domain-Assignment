@@ -16,7 +16,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
 function Login() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
   const [formData, setFormData] = useState({
@@ -53,7 +53,7 @@ function Login() {
       });
 
       // Clear any previous error messages
-      navigate("/home");
+      navigate("/create-domain");
       setError(null);
     } catch (error) {
       console.error("Login failed:", error.response.data.message);

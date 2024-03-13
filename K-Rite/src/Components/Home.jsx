@@ -24,11 +24,11 @@ function Home() {
         <Spacer />
         <ButtonGroup gap="2">
           <Button colorScheme="teal">
-            <Link to={"/create-domain"}>Create</Link>
+            <Link to={"/signup"}>Signup</Link>
           </Button>
           <Button colorScheme="teal">
             {" "}
-            <Link to={"/list-domain"}>List</Link>
+            <Link to={"/login"}>Login</Link>
           </Button>
         </ButtonGroup>
       </Flex>

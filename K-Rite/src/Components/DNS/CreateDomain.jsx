@@ -5,8 +5,11 @@ import {
   Input,
   Button,
   useToast,
+  Container,
+  Heading,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function CreateDomain() {
   const [formData, setFormData] = useState({
@@ -50,38 +53,49 @@ function CreateDomain() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormControl>
-        <FormLabel>Name</FormLabel>
-        <Input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-      </FormControl>
-      <FormControl>
-        <FormLabel>Type</FormLabel>
-        <Input
-          type="text"
-          name="type"
-          value={formData.type}
-          onChange={handleChange}
-        />
-      </FormControl>
-      <FormControl>
-        <FormLabel>Description</FormLabel>
-        <Input
-          type="text"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
-        />
-      </FormControl>
-      <Button mt={4} colorScheme="teal" type="submit">
-        Create Domain
-      </Button>
-    </form>
+    <Container>
+      <Heading mb={10}>Create Domain</Heading>
+      <form onSubmit={handleSubmit}>
+        <FormControl>
+          <FormLabel>Name</FormLabel>
+          <Input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Type</FormLabel>
+          <Input
+            type="text"
+            name="type"
+            value={formData.type}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Description</FormLabel>
+          <Input
+            type="text"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <Button mt={4} colorScheme="teal" type="submit">
+          Create Domain
+        </Button>
+        <Container textAlign={"center"}>
+          <Link
+            to={"/list-domain"}
+            style={{ textDecoration: "underline", color: "red" }}
+          >
+            View Domines
+          </Link>
+        </Container>
+      </form>
+    </Container>
   );
 }
 

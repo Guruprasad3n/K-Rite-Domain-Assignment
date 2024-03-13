@@ -16,8 +16,12 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Container,
+  Heading,
+  Flex,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function ListDomains() {
   const [domains, setDomains] = useState([]);
@@ -120,83 +124,94 @@ function ListDomains() {
   };
 
   return (
-    <List spacing={3}>
-      {domains.map((domain) => (
-        <ListItem key={domain._id}>
-          <Box
-            borderWidth="1px"
-            borderRadius="lg"
-            overflow="hidden"
-            p="4"
-            boxShadow="md"
-          >
-            <Text fontSize="xl" fontWeight="semibold" mb="2">
-              {domain.name}
-            </Text>
-            <Text>{domain.type}</Text>
-            <Text>{domain.description}</Text>
-            <Button
-              colorScheme="blue"
-              onClick={() => handleEdit(domain)}
-              mt="2"
+    <Container>
+      <Flex alignItems={"center"} justifyContent={"space-between"}>
+        <Heading>List Domains</Heading>
+        <Link
+          to={"/create-domain"}
+          style={{ textDecoration: "underline", color: "red" }}
+        >
+          Create Domain
+        </Link>
+      </Flex>
+      <List spacing={3}>
+        {domains.map((domain) => (
+          <ListItem key={domain._id}>
+            <Box
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+              p="4"
+              boxShadow="md"
             >
-              Edit
-            </Button>
-            <Button
-              colorScheme="red"
-              onClick={() => handleDelete(domain._id)}
-              mt="2"
-            >
-              Delete
-            </Button>
-          </Box>
-        </ListItem>
-      ))}
-      <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>
-            {isEditing ? "Edit Domain" : "Create Domain"}
-          </ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <FormControl>
-              <FormLabel>Name</FormLabel>
-              <Input
-                type="text"
-                name="name"
-                value={editedDomain?.name || ""}
-                onChange={handleInputChange}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Type</FormLabel>
-              <Input
-                type="text"
-                name="type"
-                value={editedDomain?.type || ""}
-                onChange={handleInputChange}
-              />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Description</FormLabel>
-              <Input
-                type="text"
-                name="description"
-                value={editedDomain?.description || ""}
-                onChange={handleInputChange}
-              />
-            </FormControl>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={handleUpdate}>
-              Update
-            </Button>
-            <Button onClick={handleCloseModal}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </List>
+              <Text fontSize="xl" fontWeight="semibold" mb="2">
+                {domain.name}
+              </Text>
+              <Text>{domain.type}</Text>
+              <Text>{domain.description}</Text>
+              <Button
+                colorScheme="blue"
+                onClick={() => handleEdit(domain)}
+                mt="2"
+              >
+                Edit
+              </Button>
+              <Button
+                colorScheme="red"
+                onClick={() => handleDelete(domain._id)}
+                mt="2"
+              >
+                Delete
+              </Button>
+            </Box>
+          </ListItem>
+        ))}
+        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>
+              {isEditing ? "Edit Domain" : "Create Domain"}
+            </ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <FormControl>
+                <FormLabel>Name</FormLabel>
+                <Input
+                  type="text"
+                  name="name"
+                  value={editedDomain?.name || ""}
+                  onChange={handleInputChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Type</FormLabel>
+                <Input
+                  type="text"
+                  name="type"
+                  value={editedDomain?.type || ""}
+                  onChange={handleInputChange}
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel>Description</FormLabel>
+                <Input
+                  type="text"
+                  name="description"
+                  value={editedDomain?.description || ""}
+                  onChange={handleInputChange}
+                />
+              </FormControl>
+            </ModalBody>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={handleUpdate}>
+                Update
+              </Button>
+              <Button onClick={handleCloseModal}>Cancel</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </List>
+    </Container>
   );
 }
 
