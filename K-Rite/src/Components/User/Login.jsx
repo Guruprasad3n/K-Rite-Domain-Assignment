@@ -19,6 +19,10 @@ function Login() {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
+  const token = localStorage.getItem("token");
+  if (token) {
+    navigate("/create-domain");
+  }
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -38,7 +42,10 @@ function Login() {
         "http://localhost:8000/api/user/login",
         formData
       );
-      console.log("User logged in:", response.data);
+      const token = response.data.token;
+      const userId = response.data.user._id;
+      localStorage.setItem("token", JSON.stringify(token));
+      localStorage.setItem("userId", JSON.stringify(userId));
 
       setFormData({
         email: "",
@@ -51,10 +58,9 @@ function Login() {
         duration: 5000,
         isClosable: true,
       });
-
-      // Clear any previous error messages
       navigate("/create-domain");
       setError(null);
+      window.location.reload();
     } catch (error) {
       console.error("Login failed:", error.response.data.message);
 
@@ -71,7 +77,7 @@ function Login() {
   };
 
   return (
-    <Container maxW="container.sm">
+    <Container maxW="md">
       <Heading textAlign={"center"} as="h1" mb={4}>
         Login
       </Heading>
@@ -80,7 +86,7 @@ function Login() {
         <Input
           type="email"
           name="email"
-          value={formData.email}
+          value={formData.email || "gp"}
           onChange={handleChange}
         />
       </FormControl>
@@ -90,7 +96,7 @@ function Login() {
           <Input
             type={show ? "text" : "password"}
             name="password"
-            value={formData.password}
+            value={formData.password || "123456"}
             onChange={handleChange}
             pr="4.5rem"
             placeholder="Enter password"

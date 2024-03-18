@@ -19,9 +19,12 @@ import {
   Container,
   Heading,
   Flex,
+  Grid,
+  GridItem,
+  Stack,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function ListDomains() {
   const [domains, setDomains] = useState([]);
@@ -29,6 +32,8 @@ function ListDomains() {
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const toast = useToast();
+  const navigate = useNavigate();
+  const authToken = localStorage.getItem("token");
 
   useEffect(() => {
     fetchDomains();
@@ -124,48 +129,61 @@ function ListDomains() {
   };
 
   return (
-    <Container>
-      <Flex alignItems={"center"} justifyContent={"space-between"}>
-        <Heading>List Domains</Heading>
-        <Link
-          to={"/create-domain"}
-          style={{ textDecoration: "underline", color: "red" }}
-        >
-          Create Domain
-        </Link>
-      </Flex>
-      <List spacing={3}>
-        {domains.map((domain) => (
-          <ListItem key={domain._id}>
-            <Box
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-              p="4"
-              boxShadow="md"
+    <>
+      <Container maxW={"xxl"}>
+        <Stack>
+          <Flex alignItems={"center"} justifyContent={"space-between"}>
+            <Heading>List Domains</Heading>
+            <Link
+              to={"/create-domain"}
+              style={{ textDecoration: "underline", color: "red" }}
             >
-              <Text fontSize="xl" fontWeight="semibold" mb="2">
-                {domain.name}
-              </Text>
-              <Text>{domain.type}</Text>
-              <Text>{domain.description}</Text>
-              <Button
-                colorScheme="blue"
-                onClick={() => handleEdit(domain)}
-                mt="2"
-              >
-                Edit
-              </Button>
-              <Button
-                colorScheme="red"
-                onClick={() => handleDelete(domain._id)}
-                mt="2"
-              >
-                Delete
-              </Button>
-            </Box>
-          </ListItem>
-        ))}
+              Create Domain
+            </Link>
+          </Flex>
+        </Stack>
+
+        <Container margin={"auto"} maxW={"xxl"} padding={2}>
+          <Grid
+            templateColumns="repeat(3, 1fr)"
+            templateRows={"auto auto"}
+            gap={2}
+          >
+            {domains.map((domain) => (
+              <GridItem key={domain._id}>
+                <Box
+                  borderWidth="1px"
+                  borderRadius="lg"
+                  overflow="hidden"
+                  w={"400px"}
+                  p="4"
+                  boxShadow="md"
+                >
+                  <Text fontSize="xl" fontWeight="semibold" mb="2">
+                    {domain.name}
+                  </Text>
+                  <Text>{domain.type}</Text>
+                  <Text>{domain.description}</Text>
+                  <Button
+                    colorScheme="blue"
+                    onClick={() => handleEdit(domain)}
+                    mt="2"
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    colorScheme="red"
+                    onClick={() => handleDelete(domain._id)}
+                    mt="2"
+                  >
+                    Delete
+                  </Button>
+                </Box>
+              </GridItem>
+            ))}
+          </Grid>
+        </Container>
+
         <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
           <ModalOverlay />
           <ModalContent>
@@ -210,9 +228,107 @@ function ListDomains() {
             </ModalFooter>
           </ModalContent>
         </Modal>
-      </List>
-    </Container>
+      </Container>
+    </>
   );
 }
 
 export default ListDomains;
+
+// <Container w={"100vw"}>
+// <Flex alignItems={"center"} justifyContent={"space-between"}>
+//   <Heading>List Domains</Heading>
+//   <Link
+//     to={"/create-domain"}
+//     style={{ textDecoration: "underline", color: "red" }}
+//   >
+//     Create Domain
+//   </Link>
+// </Flex>
+// {/* <List spacing={3}> */}
+// <Grid
+//   border={"1px solid red"}
+//   templateColumns="repeat(5, 1fr)"
+//   gap={4}
+//   w={"100%"}
+//   margin={"auto"}
+// >
+//   {domains.map((domain) => (
+//     <GridItem key={domain._id}>
+//       <Box
+//         borderWidth="1px"
+//         borderRadius="lg"
+//         overflow="hidden"
+//         w={"400px"}
+//         p="4"
+//         boxShadow="md"
+//       >
+//         <Text fontSize="xl" fontWeight="semibold" mb="2">
+//           {domain.name}
+//         </Text>
+//         <Text>{domain.type}</Text>
+//         <Text>{domain.description}</Text>
+//         <Button
+//           colorScheme="blue"
+//           onClick={() => handleEdit(domain)}
+//           mt="2"
+//         >
+//           Edit
+//         </Button>
+//         <Button
+//           colorScheme="red"
+//           onClick={() => handleDelete(domain._id)}
+//           mt="2"
+//         >
+//           Delete
+//         </Button>
+//       </Box>
+//     </GridItem>
+//   ))}
+// </Grid>
+// <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
+//   <ModalOverlay />
+//   <ModalContent>
+//     <ModalHeader>
+//       {isEditing ? "Edit Domain" : "Create Domain"}
+//     </ModalHeader>
+//     <ModalCloseButton />
+//     <ModalBody>
+//       <FormControl>
+//         <FormLabel>Name</FormLabel>
+//         <Input
+//           type="text"
+//           name="name"
+//           value={editedDomain?.name || ""}
+//           onChange={handleInputChange}
+//         />
+//       </FormControl>
+//       <FormControl>
+//         <FormLabel>Type</FormLabel>
+//         <Input
+//           type="text"
+//           name="type"
+//           value={editedDomain?.type || ""}
+//           onChange={handleInputChange}
+//         />
+//       </FormControl>
+//       <FormControl>
+//         <FormLabel>Description</FormLabel>
+//         <Input
+//           type="text"
+//           name="description"
+//           value={editedDomain?.description || ""}
+//           onChange={handleInputChange}
+//         />
+//       </FormControl>
+//     </ModalBody>
+//     <ModalFooter>
+//       <Button colorScheme="blue" mr={3} onClick={handleUpdate}>
+//         Update
+//       </Button>
+//       <Button onClick={handleCloseModal}>Cancel</Button>
+//     </ModalFooter>
+//   </ModalContent>
+// </Modal>
+// {/* </List> */}
+// </Container>

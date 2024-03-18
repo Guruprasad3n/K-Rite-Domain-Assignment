@@ -72,7 +72,7 @@ function Signup() {
   };
 
   return (
-    <Container>
+    <Container maxW={"md"}>
       <Heading textAlign={"center"} as="h1" mb={4}>
         Register
       </Heading>
@@ -126,11 +126,12 @@ function Signup() {
       )}
       <Text>
         Already Have an account Please{" "}
-        <Link to={"/login"} style={{ color: "red" }}>Login</Link>
+        <Link to={"/login"} style={{ color: "red" }}>
+          Login
+        </Link>
       </Text>
     </Container>
   );
 }
 
 export default Signup;
-

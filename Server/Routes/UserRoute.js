@@ -10,13 +10,13 @@ const {
 } = require("../Controllers/UserController");
 const verifyToken = require("../Middlewares/AuthMiddleware");
 
-router.post('/register', registerUser);
+router.post("/register", registerUser);
 
 router.post("/login", loginUser);
 
 router.get("/", verifyToken, getUsers);
 
-router.get("/:id", verifyToken, getUserById);
+router.get("/:id", getUserById);
 
 router.put("/:id", verifyToken, updateUser);
 
